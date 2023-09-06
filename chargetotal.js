@@ -34,16 +34,16 @@ const rocky = {
 //function to check if the person has a subscription
 //within function, if person has subscription - calculate total after 25% discount
 //if no subscription, then return original amount (pricePerRefill) into new variable: newTotal
-function discountedSubscription(pricePerRefill, subscription){
-    const newRefillTotal = 0;
+function discountedSubscription(pricePerRefill, subscription, refills){
+    let newRefillTotal = 0;
     //check if subscription = true
     // if true, return pricePerRefill * .75 for a new refill total
     // if false, return pricePerRefill = new refill total
-    if (subscription = true){
-        newRefillTotal = pricePerRefill * .75; 
+    if (subscription === true){
+        newRefillTotal = pricePerRefill * refills * .75; 
         return newRefillTotal;
-    } else if (subscription = false){
-        newRefillTotal = pricePerRefill; 
+    } else if (subscription === false){
+        newRefillTotal = pricePerRefill * refills; 
         return newRefillTotal; 
     }
 }
@@ -51,21 +51,30 @@ function discountedSubscription(pricePerRefill, subscription){
 //function to check if the person has a coupon 
 //within function, if the person has a coupon, return -$10 to the newTotal that has been returned from discountedSubscription funciton
 //if no coupon, return newTotal 
-function hasCoupon(coupon, pricePerRefill){
+function hasCoupon(coupon, pricePerRefill,subscription, refills){
     //implement discountedSubscription function to calculate new total
-    discountedSubscription(pricePerRefill,subscription);
-    const finalAmount= 0; 
+    const newRefillTotal = discountedSubscription(pricePerRefill,subscription, refills);
+    let finalAmount= 0; 
     //check if coupon = true
     //if true, return newRefillTotal - 10
     //if false, return newRefillTotal
-    if (coupon = true){
+    if (coupon === true){
         finalAmount = newRefillTotal - 10;
         return finalAmount;
 
-    } else if (coupon = false){
+    } else if (coupon === false){
         finalAmount = newRefillTotal;
         return finalAmount;
     }
 
 }
+
+function getTotal(customer){
+    let total = hasCoupon(customer.coupon, customer.pricePerRefill, customer.subscription, customer.refills);
+    return total;
+}
+
+console.log(discountedSubscription(timmy.pricePerRefill, timmy.subscription, timmy.refills));
+console.log(hasCoupon(timmy.coupon, timmy.pricePerRefill, timmy.subscription, timmy.refills));
+console.log("Your grand total is: " + getTotal(timmy));
 //console.log("Your grand total is $" + finalAmount + "." );
